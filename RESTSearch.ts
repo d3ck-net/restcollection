@@ -1,6 +1,9 @@
 import {RESTCollection} from './RESTCollection';
 import {CyptoJS} from 'meteor/jparker:crypto-md5';
 
+/**
+ * internal class to handle RESTCollection searches
+ */
 export class RESTSearch {
     private data:Object;
     private collection:RESTCollection;
@@ -9,6 +12,12 @@ export class RESTSearch {
     private _limit:Object;
     private cursor:ReactiveArray;
 
+    /**
+     *
+     * @param collection
+     * @param data
+     * @param limit
+     */
     constructor(collection:RESTCollection, data:Object, limit:Object) {
         this.collection = collection;
         this.data = data;
@@ -17,10 +26,19 @@ export class RESTSearch {
         this._limit = limit;
     }
 
+    /**
+     *
+     * @returns {any}
+     */
     public getHash():string {
         return CryptoJS.MD5(JSON.stringify({search: this.data, limit: this._limit}));
     }
 
+    /**
+     * 
+     * @param cb
+     * @returns {any}
+     */
     public execute(cb?):ReactiveArray {
 
         var self = this;
@@ -28,7 +46,7 @@ export class RESTSearch {
 
             this.running = true;
 
-            $.get(this.collection.getEndPoint(), {search:this.data,limit:this._limit}, function (data) {
+            $.get(this.collection.getEndPoint(), ({search:this.data,limit:this._limit}), function (data) {
                 self.cursor.clear();
                 self.collection._count.set(data.count);
                 $.each(data.data, function (i, o) {
