@@ -47,8 +47,10 @@ export class RESTSearch {
             this.running = true;
 
             $.get(this.collection.getEndPoint(), ({search:this.data,limit:this._limit}), function (data) {
+
+                data = self.collection.mapDataResult(data);
                 self.cursor.clear();
-                self.collection._count.set(data.count);
+                self.collection._count.set(data.count ? data.count : data.data.length);
                 $.each(data.data, function (i, o) {
                     
                     

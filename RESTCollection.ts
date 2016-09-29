@@ -51,7 +51,7 @@ export class RESTCollection extends CollectionExtender {
         this._preFilter = search ? search : this._preFilter;
         this._preLimit = limit ? limit : this._preLimit;
 
-        var preFitlerString = ([this._preFilter, this._preLimit]);
+        var preFitlerString = JSON.stringify([this._preFilter, this._preLimit]);
 
         if (this._lastPrefilter !== preFitlerString) {
             this._lastPrefilter = preFitlerString;
@@ -73,9 +73,7 @@ export class RESTCollection extends CollectionExtender {
      * @param data
      * @returns {RESTObject}
      */
-    protected public
-
-    transform(data:Object):RESTObject {
+    protected transform(data:Object):RESTObject {
 
         var restObject = new this._type(this, data);
         return restObject;
@@ -238,6 +236,17 @@ export class RESTCollection extends CollectionExtender {
     public findOne(filter:Object, limit:Object) {
         var res = this.find(filter, limit);
         return res[0];
+    }
+
+
+    /**
+     * maps results from the server to a proper result array
+     * @param data
+     * @returns {Object}
+     */
+    protected mapDataResult(data:Object)
+    {
+        return data;
     }
 
 

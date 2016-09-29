@@ -12,6 +12,7 @@ Package.onUse(function (api) {
     api.use('barbatus:typescript');
 
     api.use('jparker:crypto-md5');
+    api.use('manuel:reactivearray');
     api.use('aldeed:simple-schema');
     api.use('underscore');
     api.use('jquery');
