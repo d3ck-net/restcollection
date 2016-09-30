@@ -5,6 +5,7 @@ import {Converter} from "./Converter";
 
 export class CollectionExtender {
 
+    private _primaryKey:string = "_id";
 
     public getSchema(type:string):Array<Object> {
         var filters = Converter.convertSimpleSchemaToQueryBuilder(this.simpleSchema(), type);
@@ -14,6 +15,14 @@ export class CollectionExtender {
         }
 
         return filters;
+    }
+
+    public setPrimaryKey(newKey:string) {
+        this._primaryKey = newKey;
+    }
+
+    public getPrimaryKey():string {
+        return this._primaryKey;
     }
 }
 

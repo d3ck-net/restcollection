@@ -64,7 +64,7 @@ export class RESTObject {
      * @returns {string}
      */
     public getIdKey():string {
-        return "_id"
+        return this.getCollection().getPrimaryKey();
     }
 
     /**

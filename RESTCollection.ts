@@ -17,6 +17,7 @@ export class RESTCollection extends CollectionExtender {
     private _schema:ReactiveVar;
     private _count:ReactiveVar = new ReactiveVar(1000);
 
+
     private _type:Function;
     private _preFilter:Object;
     private _preLimit:Object;
@@ -121,6 +122,14 @@ export class RESTCollection extends CollectionExtender {
     }
 
     /**
+     *
+     */
+    public collectionChanged() {
+        this._collectionDependency.changed();
+        this.searches = {};
+    }
+
+    /**
      * this is supposed to mimic the insert function of:
      * http://docs.meteor.com/api/collections.html#Mongo-Collection-insert
      * @param data
@@ -130,7 +139,7 @@ export class RESTCollection extends CollectionExtender {
         var self = this;
         $.post(this.getEndPoint(), (data), function (data) {
 
-            self._collectionDependency.changed();
+            self.collectionChanged();
             if (callback) {
                 callback(null, data);
             }
@@ -153,7 +162,7 @@ export class RESTCollection extends CollectionExtender {
         var self = this;
 
         $.put(this.getEndPoint(), ({selector: selector, modifier: modifier, options: options}), function (data) {
-            self._collectionDependency.changed();
+            self.collectionChanged();
 
             if (callback) {
                 callback(null, data);
@@ -174,12 +183,11 @@ export class RESTCollection extends CollectionExtender {
      * @param callback
      * @returns {RESTObject}
      */
-    public remove(selector:Object,callback?:Function)
-    {
+    public remove(selector:Object, callback?:Function) {
         var self = this;
 
         $.delete(this.getEndPoint(), ({selector: selector}), function (data) {
-            self._collectionDependency.changed();
+            self.collectionChanged();
 
             if (callback) {
                 callback();
@@ -244,11 +252,9 @@ export class RESTCollection extends CollectionExtender {
      * @param data
      * @returns {Object}
      */
-    protected mapDataResult(data:Object)
-    {
+    protected mapDataResult(data:Object) {
         return data;
     }
-
 
 
     private searches:Object = {};
