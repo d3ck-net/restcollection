@@ -1,11 +1,11 @@
 import {RESTObject} from './RESTObject';
 import {RESTSearch} from './RESTSearch';
 import {Tracker} from 'meteor/tracker';
+import {ReactiveVar} from 'meteor/reactive-var';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import {_} from 'meteor/underscore';
 import {$} from 'meteor/jquery';
 import {CollectionExtender} from "./CollectionExtender";
-
 /**
  * the RESTCollection is a class to mimic the behaviour of Mongo Collections for REST calls.
  * there is of course no reactivity when it comes to changes on the data on the server
@@ -37,7 +37,7 @@ export class RESTCollection extends CollectionExtender {
 
         this._schema = new ReactiveVar();
 
-        this._name = type.name + 's';
+        this._name = this._type.name + 's';
 
     }
 

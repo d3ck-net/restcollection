@@ -6,16 +6,19 @@ Package.describe({
     documentation: 'README.md'
 });
 
-Package.onUse(function (api) {
+var pack = function (api) {
     api.versionsFrom('1.3');
-    api.use('ecmascript');
-    api.use('barbatus:typescript');
 
-    api.use('jparker:crypto-md5');
-    api.use('manuel:reactivearray');
-    api.use('aldeed:simple-schema');
     api.use('underscore');
     api.use('jquery');
+    
+    api.use('reactive-var@1.0.10');
+
+    api.use('ecmascript@0.5.8');
+    api.use('barbatus:typescript@0.4.1');
+
+    api.use('jparker:crypto-md5@0.1.1');
+    api.use('aldeed:simple-schema@1.5.3');
 
 
     api.addFiles('RESTObject.ts');
@@ -29,12 +32,15 @@ Package.onUse(function (api) {
 
     api.mainModule('export.js');
 
-});
+};
+Package.onUse(pack);
 
 Package.onTest(function (api) {
 
-    // api.use('dasdeck:restcollection');
-    // api.use('practicalmeteor:mocha');
-    //api.mainModule('test.js');
+    pack(api);
+    
+    api.use('practicalmeteor:mocha@2.4.5_6');
+    api.use('practicalmeteor:chai@2.1.0_1');
+    api.mainModule('test.js');
 
 });
